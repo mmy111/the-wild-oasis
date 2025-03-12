@@ -6,6 +6,8 @@ git init
 
 git add -A
 
+git commit -m "Update readme"
+
 git remote add origin https://github.com/mmy111/the-wild-oasis.git
 
 git push -u origin master:main
