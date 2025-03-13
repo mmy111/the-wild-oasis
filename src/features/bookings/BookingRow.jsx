@@ -81,7 +81,7 @@ function BookingRow({
   // We will not allow editing at this point, as it's too complex for bookings... People just need to delete a booking and create a new one
 
   const statusToTagName = {
-    unconfirmed: "blue",
+    "unconfirmed": "blue",
     "checked-in": "green",
     "checked-out": "silver",
   };
@@ -136,7 +136,6 @@ function BookingRow({
             {status === "checked-in" && (
               <Menus.Button
                 onClick={() => checkout(bookingId)}
-                disabled={isCheckingOut}
                 icon={<HiArrowUpOnSquare />}
               >
                 Check out
@@ -147,9 +146,9 @@ function BookingRow({
             {/* <Menus.Button>Delete</Menus.Button> */}
 
             {/* Now it gets a bit confusing... */}
-            <Modal.Toggle opens="delete">
+            <Menus.Toggle opens="delete">
               <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
-            </Modal.Toggle>
+            </Menus.Toggle>
           </Menus.List>
         </Menus.Menu>
 
