@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getBookings } from "../../services/apiBookings";
-import { useSearchParams } from "react-router-dom";
+import { getBooking, getBookings } from "../../services/apiBookings";
+import { useParams, useSearchParams } from "react-router-dom";
 import { PAGE_SIZE } from "../../utils/constants";
 
 export function useBookings() {
@@ -44,3 +44,16 @@ export function useBookings() {
   })
   return { bookings, isLoading, error, count };
 }
+
+export function useBooking(){
+  const {bookingId} = useParams();
+  const {data:booking,isLoading,error} = useQuery({
+    queryKey:["booking",bookingId],
+    queryFn: ()=>getBooking(bookingId),
+    retry:false,
+  });
+  return {booking,isLoading,error}
+}
+// useParams 和 searchParams 不同
+// searchParams 查询参数 URL: http://localhost:3000/bookings?bookingId=123
+// useParams  URL 路径参数 URL: http://localhost:3000/bookings/123

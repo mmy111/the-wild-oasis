@@ -74,7 +74,7 @@ function BookingRow({
   },
 }) {
   const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
-  // const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
+  const { checkout, isCheckingOut } = useCheckout();
 
   const navigate = useNavigate();
 
@@ -136,19 +136,21 @@ function BookingRow({
             {status === "checked-in" && (
               <Menus.Button
                 onClick={() => checkout(bookingId)}
-                icon={<HiArrowUpOnSquare />}
-              >
+                icon={<HiArrowUpOnSquare />
+                }
+                disabled={isCheckingOut}>
                 Check out
               </Menus.Button>
             )}
-
+            
+            <Modal.Open opens="delete">
+              <Menus.Button icon={<HiTrash />}>delete</Menus.Button>
+            </Modal.Open>
+            
             <Menus.Button icon={<HiPencil />}>Edit booking</Menus.Button>
             {/* <Menus.Button>Delete</Menus.Button> */}
 
             {/* Now it gets a bit confusing... */}
-            <Menus.Toggle opens="delete">
-              <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
-            </Menus.Toggle>
           </Menus.List>
         </Menus.Menu>
 
