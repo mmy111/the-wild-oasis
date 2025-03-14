@@ -10,7 +10,6 @@ function CabinTable() {
   const { isLoading, cabins, error } = useCabins();
   if (isLoading) return <Spinner />;
   if (error) console.log(error);
-  if (!cabins.length) return <Empty resourceName="cabins" />;
 
   const filterValue = searchParams.get("discount") || "all";
 

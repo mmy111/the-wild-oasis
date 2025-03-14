@@ -1,10 +1,10 @@
-import { useUser } from 'features/authentication/useUser';
+import { useUser } from './useUser';
 import { useState } from 'react';
-import Button from 'ui/Button';
-import FileInput from 'ui/FileInput';
-import Form from 'ui/Form';
-import FormRow from 'ui/FormRow';
-import Input from 'ui/Input';
+import Button from '../../ui/Button';
+import FileInput from '../../ui/FileInput';
+import Form from '../../ui/Form';
+import FormRow from '../../ui/FormRow';
+import Input from '../../ui/Input';
 import { useUpdateUser } from './useUpdateUser';
 
 function UpdateUserDataForm() {
@@ -18,23 +18,15 @@ function UpdateUserDataForm() {
 
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(null);
-
-  const { mutate: updateUser, isLoading: isUpdating } = useUpdateUser();
+  const {updateUser, isUpdating } = useUpdateUser({fullName,avatar},{onSuccess:()=>{
+    setAvatar(null);
+    e.target.reset();
+  }});
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!fullName) return;
-
-    updateUser(
-      { fullName, avatar },
-      {
-        onSuccess: () => {
-          setAvatar(null);
-          // Resetting form using .reset() that's available on all HTML form elements, otherwise the old filename will stay displayed in the UI
-          e.target.reset();
-        },
-      }
-    );
+    updateUser({fullName,avatar});
   }
 
   function handleCancel(e) {
@@ -63,11 +55,12 @@ function UpdateUserDataForm() {
           id='avatar'
           accept='image/*'
           onChange={(e) => setAvatar(e.target.files[0])}
+          type="file"
           // We should also validate that it's actually an image, but never mind
         />
       </FormRow>
       <FormRow>
-        <Button onClick={handleCancel} type='reset' variation='secondary'>
+        <Button onClick={handleCancel} type='reset' variation='secondary' disabled={isUpdating}>
           Cancel
         </Button>
         <Button disabled={isUpdating}>Update account</Button>
