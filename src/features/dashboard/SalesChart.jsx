@@ -1,4 +1,4 @@
-import { useDarkMode } from 'context/DarkModeContext';
+import { useDarkMode } from '../context/DarkModeContext';
 import { eachDayOfInterval, format, isSameDay, subDays } from 'date-fns';
 import {
   Area,
@@ -10,7 +10,7 @@ import {
   YAxis,
 } from 'recharts';
 import styled from 'styled-components';
-import Heading from 'ui/Heading';
+import Heading from '../../ui/Heading';
 import DashboardBox from './DashboardBox';
 
 const StyledSalesChart = styled(DashboardBox)`
@@ -35,11 +35,9 @@ function SalesChart({ bookings, numDays }) {
   const data = allDates.map((date) => {
     return {
       label: format(date, 'MMM dd'),
-      totalSales: bookings
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+      totalSales: bookings?.filter((booking) => isSameDay(date, new Date(booking.created_at)))
         .reduce((acc, cur) => acc + cur.totalPrice, 0),
-      extrasSales: bookings
-        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+      extrasSales: bookings?.filter((booking) => isSameDay(date, new Date(booking.created_at)))
         .reduce((acc, cur) => acc + cur.extrasPrice, 0),
     };
   });

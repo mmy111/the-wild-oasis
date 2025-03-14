@@ -25,10 +25,10 @@ function DarkModeProvider({children}){
    </DarkModeContext.Provider>
 }
 
-function useDrakMode(){
+function useDarkMode(){
    const context= useContext(DarkModeContext);
    if(context === undefined) throw Error('DarkMode context was used outsside of DarkModeProvider')
    return context;
 }
 
-export {DarkModeProvider,useDrakMode};
+export {DarkModeProvider,useDarkMode};
